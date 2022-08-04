@@ -1,0 +1,39 @@
+﻿$resgroup = "Things-rg"
+$resname = "ThingsLogicApp/manual"
+
+# Get-AzureRmProviderOperation -OperationSearchString "Microsoft.Logic/*" `
+#   | Where-Object { $_.Operation -like "*trigger*list*" } `
+#   | Format-Table Operation
+
+
+$apiVersion = `
+  ((Get-AzureRmResourceProvider `
+    -ProviderNamespace "Microsoft.Logic").ResourceTypes `
+    | Where-Object { $_.ResourceTypeName -eq "workflows" }).ApiVersions[0]
+
+$url = (Invoke-AzureRmResourceAction `
+  -ApiVersion $apiVersion `
+  -ResourceGroupName $resgroup  `
+  -ResourceType "Microsoft.Logic/workflows/triggers" `
+  -ResourceName $resname `
+  -Action listCallbackUrl `
+  -Force).Value
+
+Echo $url
+
+-------
+
+$outputs = (
+Get-AzureRmResourceGroupDeployment -ResourceGroupName Things-rg |
+Where-Object -Property Outputs -ne $null |
+Sort-Object -Property Timestamp |
+Select-Object -Last 1
+).Outputs
+
+$outputs.endpointUrl.Value
+
+-------
+
+$outputs =  ConvertFrom-Json '$(ARMOutput)'     
+$endpointUrl = $outputs.endpointUrl.Value
+echo $endpointUrl

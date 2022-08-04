@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "ThingsLogicApp", "ThingsLogicApp\ThingsLogicApp.deployproj", "{38D06BC7-22E5-4621-9ABF-24755F64A629}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38D06BC7-22E5-4621-9ABF-24755F64A629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D06BC7-22E5-4621-9ABF-24755F64A629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D06BC7-22E5-4621-9ABF-24755F64A629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D06BC7-22E5-4621-9ABF-24755F64A629}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8421C980-7FB2-46C0-9294-D9A455B4C03E}
+	EndGlobalSection
+EndGlobal
