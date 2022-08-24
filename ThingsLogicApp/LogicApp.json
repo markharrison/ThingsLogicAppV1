@@ -53,21 +53,21 @@
         "description": "Location of the Logic App."
       }
     },
-    "cognitiveservicescomputervision_1_Connection_Name": {
+    "cognitiveservicescomputervision_Connection_Name": {
       "type": "string",
       "defaultValue": "cognitiveservicescomputervision"
     },
-    "cognitiveservicescomputervision_1_Connection_DisplayName": {
+    "cognitiveservicescomputervision_Connection_DisplayName": {
       "type": "string",
       "defaultValue": "ThingsComputerVision"
     },
-    "cognitiveservicescomputervision_1_apiKey": {
+    "cognitiveservicescomputervision_apiKey": {
       "type": "securestring",
       "metadata": {
         "description": "Cognitive Services Account Key"
       }
     },
-    "cognitiveservicescomputervision_1_siteUrl": {
+    "cognitiveservicescomputervision_siteUrl": {
       "type": "string",
       "metadata": {
         "description": "Root site url (Example: https://westus.api.cognitive.microsoft.com ).If not specified site url will be defaulted to 'https://westus.api.cognitive.microsoft.com'."
@@ -129,22 +129,6 @@
                 ]
               }
             },
-            //"Describe_Image_URL": {
-            //  "type": "ApiConnection",
-            //  "inputs": {
-            //    "host": {
-            //      "connection": {
-            //        "name": "@parameters('$connections')['cognitiveservicescomputervision']['connectionId']"
-            //      }
-            //    },
-            //    "method": "post",
-            //    "body": {
-            //      "url": "@triggerBody()?['image']"
-            //    },
-            //    "path": "/vision/v2.0/describeImageURL"
-            //  },
-            //  "runAfter": {}
-            //},
             "Describe_Image_(V3)": {
               "inputs": {
                 "body": {
@@ -171,7 +155,6 @@
                   {
                     "name": "strCaption",
                     "type": "String",
-                    // "value": "@{string(body('Describe_Image_URL')?['description']?['captions']?[0]?['text'])}"
                     "value": "@{body('Describe_Image_(V3)')?['description']?['captions']?[0]?['text']}"
                   }
                 ]
@@ -189,7 +172,6 @@
                   {
                     "name": "strTags",
                     "type": "String",
-                    //"value": "@{string(body('Describe_Image_URL')?['description']?['tags'])}"
                     "value": "@{body('Describe_Image_(V3)')?['description']?['tags']}"
                   }
                 ]
@@ -337,30 +319,30 @@
             "value": {
               "cognitiveservicescomputervision": {
                 "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'cognitiveservicescomputervision')]",
-                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('cognitiveservicescomputervision_1_Connection_Name'))]",
-                "connectionName": "[parameters('cognitiveservicescomputervision_1_Connection_Name')]"
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('cognitiveservicescomputervision_Connection_Name'))]",
+                "connectionName": "[parameters('cognitiveservicescomputervision_Connection_Name')]"
               }
             }
           }
         }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Web/connections', parameters('cognitiveservicescomputervision_1_Connection_Name'))]"
+        "[resourceId('Microsoft.Web/connections', parameters('cognitiveservicescomputervision_Connection_Name'))]"
       ]
     },
     {
       "type": "MICROSOFT.WEB/CONNECTIONS",
       "apiVersion": "2016-06-01",
-      "name": "[parameters('cognitiveservicescomputervision_1_Connection_Name')]",
+      "name": "[parameters('cognitiveservicescomputervision_Connection_Name')]",
       "location": "[parameters('logicAppLocation')]",
       "properties": {
         "api": {
           "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'cognitiveservicescomputervision')]"
         },
-        "displayName": "[parameters('cognitiveservicescomputervision_1_Connection_DisplayName')]",
+        "displayName": "[parameters('cognitiveservicescomputervision_Connection_DisplayName')]",
         "parameterValues": {
-          "apiKey": "[parameters('cognitiveservicescomputervision_1_apiKey')]",
-          "siteUrl": "[parameters('cognitiveservicescomputervision_1_siteUrl')]"
+          "apiKey": "[parameters('cognitiveservicescomputervision_apiKey')]",
+          "siteUrl": "[parameters('cognitiveservicescomputervision_siteUrl')]"
         }
       }
     }
