@@ -29,7 +29,6 @@
     <Content Include="Deploy-AzureResourceGroup.ps1" />
     <Content Include="LogicApp.json" />
     <Content Include="LogicApp.parameters.json" />
-    <Content Include="listCallbackUrl.txt" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
