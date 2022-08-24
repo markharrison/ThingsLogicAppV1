@@ -129,21 +129,40 @@
                 ]
               }
             },
-            "Describe_Image_URL": {
-              "type": "ApiConnection",
+            //"Describe_Image_URL": {
+            //  "type": "ApiConnection",
+            //  "inputs": {
+            //    "host": {
+            //      "connection": {
+            //        "name": "@parameters('$connections')['cognitiveservicescomputervision']['connectionId']"
+            //      }
+            //    },
+            //    "method": "post",
+            //    "body": {
+            //      "url": "@triggerBody()?['image']"
+            //    },
+            //    "path": "/vision/v2.0/describeImageURL"
+            //  },
+            //  "runAfter": {}
+            //},
+            "Describe_Image_(V3)": {
               "inputs": {
+                "body": {
+                  "url": "@triggerBody()?['image']"
+                },
                 "host": {
                   "connection": {
                     "name": "@parameters('$connections')['cognitiveservicescomputervision']['connectionId']"
                   }
                 },
                 "method": "post",
-                "body": {
-                  "url": "@triggerBody()?['image']"
-                },
-                "path": "/vision/v2.0/describeImageURL"
+                "path": "/v3/subdomain/@{encodeURIComponent(encodeURIComponent('autoFilledSubdomain'))}/vision/v2.0/describe",
+                "queries": {
+                  "format": "Image URL"
+                }
               },
-              "runAfter": {}
+              "runAfter": {},
+              "type": "ApiConnection"
             },
             "Initialize_variable": {
               "type": "InitializeVariable",
@@ -152,12 +171,13 @@
                   {
                     "name": "strCaption",
                     "type": "String",
-                    "value": "@{string(body('Describe_Image_URL')?['description']?['captions']?[0]?['text'])}"
+                    // "value": "@{string(body('Describe_Image_URL')?['description']?['captions']?[0]?['text'])}"
+                    "value": "@{body('Describe_Image_(V3)')?['description']?['captions']?[0]?['text']}"
                   }
                 ]
               },
               "runAfter": {
-                "Describe_Image_URL": [
+                "Describe_Image_(V3)": [
                   "Succeeded"
                 ]
               }
@@ -169,7 +189,8 @@
                   {
                     "name": "strTags",
                     "type": "String",
-                    "value": "@{string(body('Describe_Image_URL')?['description']?['tags'])}"
+                    //"value": "@{string(body('Describe_Image_URL')?['description']?['tags'])}"
+                    "value": "@{body('Describe_Image_(V3)')?['description']?['tags']}"
                   }
                 ]
               },
