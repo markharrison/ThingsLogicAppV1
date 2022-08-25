@@ -19,7 +19,7 @@ COMPUTERVISIONNAME="ThingzCompVision"
 
 ```
 
-### create a RG - if needed
+### Create a RG - if needed
 
 ```
 az group create -g $RG -l $LOCATION  -o table 
@@ -45,7 +45,7 @@ COMPUTERVISIONAPIURL=$(az cognitiveservices account show -g $RG  -o tsv \
 
 ```
   
-### create LogicApp 
+### Create LogicApp 
 
 ```
 az deployment group create \
