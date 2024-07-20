@@ -13,3 +13,6 @@ Complete solution <https://markharrison.io/appdev-challenge/day2-complete>
 
 <https://github.com/markharrison/ThingsLogicAppV1/blob/main/infra/README.md>
 
+## Updated 
+
+20 June 2024 - v1.1 Use Event Grid subscription trigger rather than webhook
