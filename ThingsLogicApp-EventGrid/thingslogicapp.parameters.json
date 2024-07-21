@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_thingslogicapp_name": {
+            "value": "thingslogicapp"
+        },
+        "workflows_thingslogicapp_parameters_$connections": {
+            "value": {
+                "azureeventgrid": {
+                    "connectionId": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/resourceGroups/things-rg/providers/Microsoft.Web/connections/azureeventgrid",
+                    "connectionName": "azureeventgrid",
+                    "id": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/providers/Microsoft.Web/locations/uksouth/managedApis/azureeventgrid"
+                },
+                "cognitiveservicescomputervision": {
+                    "connectionId": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/resourceGroups/things-rg/providers/Microsoft.Web/connections/cognitiveservicescomputervision",
+                    "connectionName": "cognitiveservicescomputervision",
+                    "id": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/providers/Microsoft.Web/locations/uksouth/managedApis/cognitiveservicescomputervision"
+                }
+            }
+        },
+        "workflows_thingslogicapp_parameters_thingsapiurl": {
+            "value": "https://thingsapi.azure1.dev"
+        }
+    }
+}
