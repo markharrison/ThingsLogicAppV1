@@ -1,0 +1,304 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_thingslogicapp_name": {
+            "defaultValue": "thingslogicapp",
+            "type": "string"
+        },
+        "workflows_thingslogicapp_parameters_$connections": {
+            "defaultValue": {
+                "azureeventgrid": {
+                    "connectionId": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/resourceGroups/things-rg/providers/Microsoft.Web/connections/azureeventgrid",
+                    "connectionName": "azureeventgrid",
+                    "id": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/providers/Microsoft.Web/locations/uksouth/managedApis/azureeventgrid"
+                },
+                "cognitiveservicescomputervision": {
+                    "connectionId": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/resourceGroups/things-rg/providers/Microsoft.Web/connections/cognitiveservicescomputervision",
+                    "connectionName": "cognitiveservicescomputervision",
+                    "id": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/providers/Microsoft.Web/locations/uksouth/managedApis/cognitiveservicescomputervision"
+                }
+            },
+            "type": "Object"
+        },
+        "workflows_thingslogicapp_parameters_thingsapiurl": {
+            "defaultValue": "https://thingsapi.azure1.dev",
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-07-01",
+            "dependsOn": [],
+            "location": "uksouth",
+            "name": "[parameters('workflows_thingslogicapp_name')]",
+            "properties": {
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {
+                                "azureeventgrid": {
+                                    "connectionId": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/resourceGroups/things-rg/providers/Microsoft.Web/connections/azureeventgrid",
+                                    "connectionName": "azureeventgrid",
+                                    "id": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/providers/Microsoft.Web/locations/uksouth/managedApis/azureeventgrid"
+                                },
+                                "cognitiveservicescomputervision": {
+                                    "connectionId": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/resourceGroups/things-rg/providers/Microsoft.Web/connections/cognitiveservicescomputervision",
+                                    "connectionName": "cognitiveservicescomputervision",
+                                    "id": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/providers/Microsoft.Web/locations/uksouth/managedApis/cognitiveservicescomputervision"
+                                }
+                            },
+                            "type": "Object"
+                        },
+                        "thingsapiurl": {
+                            "defaultValue": "https://thingsapi.azure1.dev",
+                            "type": "String"
+                        }
+                    },
+                    "triggers": {
+                        "When_a_resource_event_occurs": {
+                            "splitOn": "@triggerBody()",
+                            "type": "ApiConnectionWebhook",
+                            "inputs": {
+                                "body": {
+                                    "properties": {
+                                        "destination": {
+                                            "endpointType": "webhook",
+                                            "properties": {
+                                                "endpointUrl": "@{listCallbackUrl()}"
+                                            }
+                                        },
+                                        "topic": "/subscriptions/bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8/resourceGroups/things-rg/providers/Microsoft.EventGrid/topics/thingseventgrid"
+                                    }
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azureeventgrid']['connectionId']"
+                                    }
+                                },
+                                "path": "/subscriptions/@{encodeURIComponent('bf0ff2fe-5503-48b0-8b52-cd0e67aa8fd8')}/providers/@{encodeURIComponent('Microsoft.EventGrid.Topics')}/resource/eventSubscriptions",
+                                "queries": {
+                                    "x-ms-api-version": "2017-06-15-preview"
+                                }
+                            }
+                        }
+                    },
+                    "actions": {
+                        "Condition": {
+                            "actions": {
+                                "Set_variable": {
+                                    "runAfter": {},
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "vStatus",
+                                        "value": "red"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Initialize_variable_3": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "expression": {
+                                "or": [
+                                    {
+                                        "contains": [
+                                            "@variables('vTags')",
+                                            "people"
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "@variables('vTags')",
+                                            "person"
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "@variables('vTags')",
+                                            "man"
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "@variables('vTags')",
+                                            "woman"
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "@variables('vTags')",
+                                            "girl"
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "@variables('vTags')",
+                                            "boy"
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "@variables('vTags')",
+                                            "child"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        },
+                        "Describe_Image_(V3)": {
+                            "runAfter": {
+                                "Parse_JSON": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": {
+                                    "url": "@body('Parse_JSON')?['Image']"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['cognitiveservicescomputervision']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/v3/subdomain/@{encodeURIComponent(encodeURIComponent('autoFilledSubdomain'))}/vision/v2.0/describe",
+                                "queries": {
+                                    "format": "Image URL",
+                                    "maxCandidates": 1
+                                }
+                            }
+                        },
+                        "HTTP": {
+                            "runAfter": {
+                                "Condition": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "image": "@body('Parse_JSON')?['Image']",
+                                    "latitude": "@body('Parse_JSON')?['Latitude']",
+                                    "longitude": "@body('Parse_JSON')?['Longitude']",
+                                    "name": "@body('Parse_JSON')?['Name']",
+                                    "status": "@variables('vStatus')",
+                                    "text": "@concat(variables('vCaption'),' ', variables('vTags'))",
+                                    "thingid": "@body('Parse_JSON')?['Thingid']"
+                                },
+                                "method": "PUT",
+                                "uri": "@{parameters('thingsapiurl')}/api/things/@{body('Parse_JSON')?['Thingid']}"
+                            }
+                        },
+                        "Initialize_variable": {
+                            "runAfter": {
+                                "Describe_Image_(V3)": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "vCaption",
+                                        "type": "string",
+                                        "value": "@{body('Describe_Image_(V3)')?['description']?['captions']?[0]?['text']}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_2": {
+                            "runAfter": {
+                                "Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "vTags",
+                                        "type": "string",
+                                        "value": "@{body('Describe_Image_(V3)')?['description']?['tags']}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_3": {
+                            "runAfter": {
+                                "Initialize_variable_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "vStatus",
+                                        "type": "string",
+                                        "value": "amber"
+                                    }
+                                ]
+                            }
+                        },
+                        "Parse_JSON": {
+                            "runAfter": {},
+                            "type": "ParseJson",
+                            "inputs": {
+                                "content": "@triggerBody()?['data']",
+                                "schema": {
+                                    "properties": {
+                                        "Data": {
+                                            "type": "string"
+                                        },
+                                        "Image": {
+                                            "type": "string"
+                                        },
+                                        "Latitude": {
+                                            "type": "number"
+                                        },
+                                        "Longitude": {
+                                            "type": "number"
+                                        },
+                                        "Name": {
+                                            "type": "string"
+                                        },
+                                        "Status": {
+                                            "type": "string"
+                                        },
+                                        "Text": {
+                                            "type": "string"
+                                        },
+                                        "Thingid": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": "[parameters('workflows_thingslogicapp_parameters_$connections')]"
+                    },
+                    "thingsapiurl": {
+                        "value": "[parameters('workflows_thingslogicapp_parameters_thingsapiurl')]"
+                    }
+                },
+                "state": "Enabled"
+            },
+            "scale": null,
+            "tags": {},
+            "type": "Microsoft.Logic/workflows"
+        }
+    ],
+    "variables": {}
+}
