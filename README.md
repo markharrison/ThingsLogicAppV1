@@ -16,3 +16,5 @@ Complete solution <https://markharrison.io/appdev-challenge/day2-complete>
 ## Updated 
 
 20 June 2024 - v1.1 Use Event Grid subscription trigger rather than webhook
+
+![](docs/scrn3.png)
